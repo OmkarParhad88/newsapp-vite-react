@@ -1,0 +1,5 @@
+{
+  "editor.wrappingStrategy": "advanced",
+  "diffEditor.wordWrap": "inherit",
+  "editor.wordWrap": "on"
+}

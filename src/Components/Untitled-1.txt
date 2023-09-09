@@ -1,0 +1,5 @@
+Your API key is: 293b6917614d4df8aa3cffbbd41057b7
+
+https://newsapi.org/v2/everything?q=Apple&from=2022-09-18&sortBy=popularity&apiKey=2293b6917614d4df8aa3cffbbd41057b7
+
+https://newsapi.org/v2/top-headlines?country=us&apiKey=293b6917614d4df8aa3cffbbd41057b7
