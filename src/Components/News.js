@@ -9,8 +9,13 @@ const News = (props) => {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
-  const [totalResultes, setTotalResultes] = useState(0)
+  const [totalResults, setTotalResults] = useState(0)
 
+  useEffect(() => {
+    updateNews();
+    document.title = `${capitalizeFirstLetter(props.category)} - News`
+   
+  }, [props.reload])
 
   const capitalizeFirstLetter = (string) => {
     return string[0].toUpperCase() + string.slice(1);
@@ -25,16 +30,11 @@ const News = (props) => {
     let preseData = await data.json();
     props.newProgress(50);
     setArticles(preseData.articles);
-    setTotalResultes(preseData.totalResultes);
+    setTotalResults(preseData.totalResults);
     setLoading(false);
     props.newProgress(100);
   }
 
-  useEffect(() => {
-    updateNews();
-    document.title = `${capitalizeFirstLetter(props.category)} - News`
-
-  }, [])
 
   const fetchMoreData = async () => {
     let url = `https://newsapi.org/v2/top-headlines?category=${props.category}&country=${props.country}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`;
@@ -42,7 +42,7 @@ const News = (props) => {
     let data = await fetch(url);
     let preseData = await data.json();
     setArticles(articles.concat(preseData.articles));
-    setTotalResultes(preseData.totalResultes);
+    setTotalResults(preseData.totalResults);
     setLoading(false);
   }
   return (
@@ -53,7 +53,7 @@ const News = (props) => {
       <InfiniteScroll
         dataLength={articles.length}
         next={fetchMoreData}
-        hasMore={articles.length !== totalResultes}
+        hasMore={articles.length !== totalResults}
         loader={<Spinner />}>
         <div className="container">
           <div className="row">
