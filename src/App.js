@@ -42,7 +42,7 @@ function App() {
         />
         <Nevbar country={handleSelect} countryTitle={countryTitle} />
         <Routes>
-          <Route exact path="/" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="top" />} ></Route >
+          <Route exact path="/newsapp" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="top" />} ></Route >
           <Route exact path="/business" element={<News newProgress={newProgress} apiKey={apiKey} size={size} country={country} category="business" />} ></Route >
           <Route exact path="/entertainment" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="entertainment" />} ></Route >
           <Route exact path="/health" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="health" />} />
