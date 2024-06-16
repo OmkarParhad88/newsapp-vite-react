@@ -1,5 +1,7 @@
 
 import './App.css';
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react'
 import Nevbar from './Components/Navbar'
 import News from './Components/News';
@@ -26,12 +28,9 @@ function App() {
   const handleSelect = (e) => {
     const selected = countries.find(c => c.code === e)
     if (selected) {
-      setCountryTitle(selected.name)
+      setCountryTitle(selected.country)
       setCountry(e);
-      // console.log(e)
-
     }
-
   }
 
   return (
@@ -43,14 +42,14 @@ function App() {
         />
         <Nevbar country={handleSelect} countryTitle={countryTitle} />
         <Routes>
-          <Route exact path="/" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="top" />} ></Route >
-          <Route exact path="/business" element={<News newProgress={newProgress} apiKey={apiKey} size={size} country="in" category="business" />} ></Route >
-          <Route exact path="/entertainment" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="entertainment" />} ></Route >
-          <Route exact path="/health" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="health" />} />
-          <Route exact path="/science" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="science" />} ></Route >
-          <Route exact path="/sports" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="sports" />} ></Route >
+          <Route exact path="/" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="top" />} ></Route >
+          <Route exact path="/business" element={<News newProgress={newProgress} apiKey={apiKey} size={size} country={country} category="business" />} ></Route >
+          <Route exact path="/entertainment" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="entertainment" />} ></Route >
+          <Route exact path="/health" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="health" />} />
+          <Route exact path="/science" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="science" />} ></Route >
+          <Route exact path="/sports" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="sports" />} ></Route >
           const mySecret = process.env['REACT_APP_NEWS_API']
-          <Route exact path="/technology" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country="in" category="technology" />} ></Route >
+          <Route exact path="/technology" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="technology" />} ></Route >
         </Routes>
       </Router>
     </>

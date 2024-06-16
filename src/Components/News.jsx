@@ -4,8 +4,6 @@ import Spinner from './Spinner'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const News = ({ newProgress, key, apiKey, category, country ,size}) => {
-  // const ap = apikey;
-// console.log(apikey)
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState()
@@ -17,7 +15,7 @@ const News = ({ newProgress, key, apiKey, category, country ,size}) => {
  useEffect(() => {
     updateNews();
     document.title = `${capitalizeFirstLetter(category)} - News`
-  }, [category])
+  }, [category,country])
 
   const updateNews = async () => {
     newProgress(10);
@@ -65,12 +63,12 @@ const News = ({ newProgress, key, apiKey, category, country ,size}) => {
                 return (
                   <div className="col-md-4" key={element.link}>
                     <NewsItem
-                      title={element.title ? element.title.slice(0, 45) : ""}
+                      title={element.title ? element.title.slice(0, 45) : "Title not provided"}
                       newsUrl={element.link}
                       imageUrl={element.image_url}
                       date={element.pubDate}
                       source={element.source_id}
-                      description={element.description ? element.description.slice(0, 88) : ""} />
+                      description={element.description ? element.description.slice(0, 88) : "Description not provided"} />
                   </div>
                 )
               })}
