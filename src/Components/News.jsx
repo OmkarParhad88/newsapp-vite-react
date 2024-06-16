@@ -59,7 +59,6 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
     setLoading(false);
    })
    .catch((error) => {
-    console.log(error);
     setLoading(false);
     setError(true);
     setErrorMessage(error.message);
@@ -75,7 +74,7 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
     dataLength={articles.length}
     next={fetchMoreData}
     hasMore={articles.length !== totalResults}
-    loader={<Spinner />}
+    // loader={<Spinner />}
    >
     <div className="container">
      <div className="row">
