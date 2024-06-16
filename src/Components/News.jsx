@@ -6,11 +6,11 @@ import axios from "axios";
 
 const News = ({ newProgress, key, apiKey, category, country, size }) => {
  const [articles, setArticles] = useState([]);
- const [loading, setLoading] = useState(true);
+ const [loading, setLoading] = useState(false);
  const [page, setPage] = useState();
  const [totalResults, setTotalResults] = useState(0);
-  const [error, setError] = useState(false);
-  const[errorMessage, setErrorMessage] = useState('');
+ const [error, setError] = useState(false);
+ const [errorMessage, setErrorMessage] = useState("");
 
  const capitalizeFirstLetter = (string) => {
   return string[0].toUpperCase() + string.slice(1);
@@ -27,6 +27,7 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
   await axios
    .get(url)
    .then((response) => {
+    setError(false);
     newProgress(30);
     let data = response.data;
     newProgress(50);
@@ -36,23 +37,33 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
     setLoading(false);
     newProgress(100);
    })
-   .catch((error)=> {
+   .catch((error) => {
     console.log(error);
     setLoading(false);
     newProgress(100);
-     setError(true);
-     setErrorMessage(error.message);
+    setError(true);
+    setErrorMessage(error.message);
    });
  };
 
  const fetchMoreData = async () => {
   const url = `https://newsdata.io/api/1/news?category=${category}&language=en&country=${country}&apikey=${apiKey}&size=${size}&page=${page}`;
-  let data = await fetch(url);
-  let preseData = await data.json();
-  setArticles(articles.concat(preseData.results));
-  setPage(preseData.nextPage);
-  setTotalResults(preseData.totalResults);
-  setLoading(false);
+
+  await axios
+   .get(url)
+   .then((response) => {
+    let data = response.data;
+    setArticles(articles.concat(data.results));
+    setPage(data.nextPage);
+    setTotalResults(data.totalResults);
+    setLoading(false);
+   })
+   .catch((error) => {
+    console.log(error);
+    setLoading(false);
+    setError(true);
+    setErrorMessage(error.message);
+   });
  };
  return (
   <div>
