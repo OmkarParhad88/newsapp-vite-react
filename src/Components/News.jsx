@@ -3,33 +3,38 @@ import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const News = ({ newProgress, key, apiKey, category, country, size }) => {
+const News = ({ newProgress, key, apiKey, category,  size }) => {
  const [articles, setArticles] = useState([]);
  const [loading, setLoading] = useState(false);
  const [page, setPage] = useState();
  const [totalResults, setTotalResults] = useState(0);
  const [error, setError] = useState(false);
- const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  
+  const code = useSelector((state) => state.country.code);
+  const region = useSelector((state) => state.country.region);
 
  const capitalizeFirstLetter = (string) => {
   return string[0].toUpperCase() + string.slice(1);
  };
  useEffect(() => {
   updateNews();
-  document.title = `${capitalizeFirstLetter(category)} - News`;
- }, [category, country]);
+  document.title = `${capitalizeFirstLetter(category)} - News from ${code}`;
+ }, [category, code]);
 
  const updateNews = async () => {
   newProgress(10);
-  const url = `https://newsdata.io/api/1/news?category=${category}&language=en&country=${country}&apikey=${apiKey}&size=${size}`;
+  const url = `https://newsdata.io/api/1/news?category=${category}&language=en&country=${code}&apikey=${apiKey}&size=${size}`;
   setLoading(true);
   await axios
    .get(url)
    .then((response) => {
     setError(false);
     newProgress(30);
-    let data = response.data;
+     let data = response.data;
+     console.log(data)
     newProgress(50);
     setArticles(data.results);
     setPage(data.nextPage);
@@ -47,7 +52,7 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
  };
 
  const fetchMoreData = async () => {
-  const url = `https://newsdata.io/api/1/news?category=${category}&language=en&country=${country}&apikey=${apiKey}&size=${size}&page=${page}`;
+  const url = `https://newsdata.io/api/1/news?category=${category}&language=en&country=${code}&apikey=${apiKey}&size=${size}&page=${page}`;
 
   await axios
    .get(url)
@@ -61,13 +66,13 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
    .catch((error) => {
     setLoading(false);
     setError(true);
-    setErrorMessage(error.message);
+    setErrorMessage(`${error.message} ${error.response.statusText}`);
    });
  };
  return (
   <div>
    <h2 className="text-center" style={{ margin: "86px 0px 18px 0" }}>
-    News- Top Headline From {capitalizeFirstLetter(category)} Category
+    News- Headline From {capitalizeFirstLetter(category)} Category in {region}
    </h2>
    {loading && <Spinner />}
    <InfiniteScroll
@@ -78,8 +83,8 @@ const News = ({ newProgress, key, apiKey, category, country, size }) => {
    >
     <div className="container">
      <div className="row">
-      {error ? (
-       <div style={{ color: "red", textAlign: "center" }}>{errorMessage}</div>
+      {error&&totalResults===0 ? (
+       <div style={{ color: "red", textAlign: "center" }}>{errorMessage} results not found</div>
       ) : (
        articles.map((element) => {
         return (

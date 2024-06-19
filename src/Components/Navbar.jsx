@@ -2,7 +2,13 @@ import {Link} from 'react-router-dom'
 import countries from "../country.json";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-const Navbar = ({ country, countryTitle }) => {
+import { useSelector, useDispatch } from "react-redux";
+import { setRegion, setCode } from '../ReduxSlices/countrySlice';
+const Navbar = () => {
+  const region = useSelector((state) => state.country.region);
+  // console.log(code);
+  // console.log(region);
+  const dispatch = useDispatch();
  return (
   <>
    <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -60,10 +66,16 @@ const Navbar = ({ country, countryTitle }) => {
        </li>
       </ul>
      </div>
-     <Dropdown onSelect={(eventKey) => country(eventKey)}>
+         <Dropdown onSelect={(eventKey) => {
+           dispatch(setCode(eventKey)) 
+           const selected = countries.find((c) => c.code === eventKey);
+           dispatch(setRegion(selected.country));
+          //  console.log(code);
+         }
+     }>
       <DropdownButton
        // alignRight
-       title={countryTitle}
+       title={region}
        id="dropdown-menu-align-right"
       >
        <div style={{ maxHeight: "50vh", overflowY: "scroll" }}>
