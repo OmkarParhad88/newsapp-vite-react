@@ -1,9 +1,8 @@
 
 import './App.css';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react'
-import Nevbar from './Components/Navbar'
+import Navbar from './Components/Navbar'
 import News from './Components/News';
 import LoadingBar from 'react-top-loading-bar'
 import countries from './country.json'
@@ -40,7 +39,7 @@ function App() {
           color='#f11946'
           progress={progress}
         />
-        <Nevbar country={handleSelect} countryTitle={countryTitle} />
+        <Navbar country={handleSelect} countryTitle={countryTitle} />
         <Routes>
           <Route exact path="/newsapp" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="top" />} ></Route >
           <Route exact path="/business" element={<News newProgress={newProgress} apiKey={apiKey} size={size} country={country} category="business" />} ></Route >
@@ -48,7 +47,7 @@ function App() {
           <Route exact path="/health" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="health" />} />
           <Route exact path="/science" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="science" />} ></Route >
           <Route exact path="/sports" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="sports" />} ></Route >
-          const mySecret = process.env['REACT_APP_NEWS_API']
+          {/* const mySecret = process.env['REACT_APP_NEWS_API'] */}
           <Route exact path="/technology" element={<News newProgress={newProgress} apiKey={apiKey}  size={size} country={country} category="technology" />} ></Route >
         </Routes>
       </Router>

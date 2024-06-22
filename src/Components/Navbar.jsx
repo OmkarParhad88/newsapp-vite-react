@@ -13,7 +13,7 @@ const Navbar = () => {
   <>
    <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <div className="container-fluid">
-     <Link className="navbar-brand" to="/">
+     <Link className="navbar-brand" to="/newsapp">
       NewsApp
      </Link>
      <button
@@ -66,13 +66,14 @@ const Navbar = () => {
        </li>
       </ul>
      </div>
-         <Dropdown onSelect={(eventKey) => {
-           dispatch(setCode(eventKey)) 
-           const selected = countries.find((c) => c.code === eventKey);
-           dispatch(setRegion(selected.country));
-          //  console.log(code);
-         }
-     }>
+     <Dropdown
+      onSelect={(eventKey) => {
+       dispatch(setCode(eventKey));
+       const selected = countries.find((c) => c.code === eventKey);
+       dispatch(setRegion(selected.country));
+       //  console.log(code);
+      }}
+     >
       <DropdownButton
        // alignRight
        title={region}
