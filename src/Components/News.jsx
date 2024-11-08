@@ -31,16 +31,15 @@ const News = ({ newProgress, key, apiKey, category,  size }) => {
   await axios
    .get(url)
    .then((response) => {
-    
-    setError(false);
+     setError(false);
      let data = response.data;
-     console.log(data)
-    // newProgress(70);
-    setArticles(data.results);
-    setPage(data.nextPage);
-    setTotalResults(data.totalResults);
-    setLoading(false);
-    newProgress(100);
+     //  console.log(data)
+     // newProgress(70);
+     setArticles(data.results);
+     setPage(data.nextPage);
+     setTotalResults(data.totalResults);
+     setLoading(false);
+     newProgress(100);
    })
    .catch((error) => {
     console.log(error);
