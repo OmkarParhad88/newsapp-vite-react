@@ -77,4 +77,4 @@ npm run dev
 sudo npm run dev
 ```
 
-
+# I hope I was guiding you well! happy coding!
